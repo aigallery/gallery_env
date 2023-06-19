@@ -98,3 +98,20 @@ ssh -p 6789 root@localhost
 
 ## Go to http://localhost:8888 to open the Jupyter Notebook
 
+## offline backup image
+
+```shell
+$ sudo docker images
+REPOSITORY                     TAG       IMAGE ID       CREATED        SIZE
+aigallery                      latest    f1cd9a240762   13 hours ago   24.9GB
+```
+because of the big size of image, it is slow to push to dockerhub, so I choose to backup the image offline.
+
+```shell
+docker save -o aigallery.tar aigallery
+```
+
+```shell
+docker load -i aigallery.tar
+```
+
