@@ -33,13 +33,28 @@ sudo docker build -t aigallery . -f Dockerfile
 
 ## run container
 
+- style1: open only some ports to outside:
 ```shell
 sudo docker run --name aigo --gpus all \
-  -v /home/aikedaer/workspace:/workspace/ \ # Change to your local directory
+  -v /home/aikedaer/project_0:/workspace/project_0 \ # Change to your local directory
   -dp 8888:8888 \
   -dp 6789:22 \
   -it aigallery
 ```
+> note: beaceuse of the proxy setting has been written to ~/.bashrc and ~/.zshrc, so in style1, you should manually comment the proxy settings.
+```shell
+export http_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7890
+```
+- style2: set --net host
+```shell
+sudo docker run -d --name aigo --gpus all \
+  --net host \
+  -v /home/aikedaer/project_0:/workspace/project_0 \ # Change to your local directory
+  -it aigallery
+```
+> this way container and host share the same port.
+
 ## enter the container
 
 ```shell
@@ -70,7 +85,7 @@ python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'
 python3 -c "import torch; print(torch.cuda.is_available())"
 ```
 
-## use SSH to access the container
+## use SSH to access the container (only for style1)
 
 ```shell
 # First run the ssh server in the container first
