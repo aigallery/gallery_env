@@ -1,0 +1,40 @@
+ipython
+ipywidgets
+# jupyterlab is already installed in Dockerfile
+matplotlib
+# numpy is already installed with tensorflow
+pytest
+scikit-learn
+seaborn
+sphinx
+sphinx-autobuild
+sphinx-rtd-theme
+sphinxcontrib-napoleon
+# tensorflow dependencies are already installed in Dockerfile
+# TORCH AND ITS DEPENDENCIES are installed in Dockerfile
+torch-ema
+ninja
+trimesh
+opencv-python
+tensorboardX
+numpy 
+pandas
+tqdm
+PyMCubes
+rich
+dearpygui
+packaging
+scipy
+
+face_alignment==1.3.4
+python_speech_features
+numba
+resampy
+transformers
+pyaudio
+soundfile
+einops
+configargparse
+
+lpips
+imageio-ffmpeg
