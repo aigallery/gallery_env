@@ -1,6 +1,6 @@
 ipython
 ipywidgets
-# jupyterlab is already installed in Dockerfile
+jupyterlab
 matplotlib
 # numpy is already installed with tensorflow
 pytest
