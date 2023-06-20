@@ -46,7 +46,7 @@ sudo docker run --name aigo --gpus all \
 export http_proxy=http://127.0.0.1:7890
 export https_proxy=http://127.0.0.1:7890
 ```
-- style2: set --net host
+- style2(only supported in Linux): set --net host
 ```shell
 sudo docker run -d --name aigo --gpus all \
   --net host \
