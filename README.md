@@ -51,7 +51,7 @@ export https_proxy=http://127.0.0.1:7890
 sudo docker run -d --name aigo --gpus all \
   --net host \
   -v /home/aikedaer/project_0:/workspace/project_0 \ # Change to your local directory
-  -it aigallery
+  aigallery
 ```
 > this way container and host share the same port.
 
