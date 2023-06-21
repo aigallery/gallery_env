@@ -103,8 +103,8 @@ ssh -p 6789 root@localhost
 
 ```shell
 $ sudo docker images
-REPOSITORY                     TAG       IMAGE ID       CREATED        SIZE
-aigallery                      latest    f1cd9a240762   13 hours ago   24.9GB
+REPOSITORY   TAG          IMAGE ID       CREATED        SIZE
+aigallery    latest       afd9254c601e   12 hours ago   21.8GB
 ```
 because of the big size of image, it is slow to push to dockerhub, so I choose to backup the image offline.
 
