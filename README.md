@@ -41,11 +41,7 @@ sudo docker run --name aigo --gpus all \
   -dp 6789:22 \
   -it aigallery
 ```
-> note: beaceuse of the proxy setting has been written to ~/.bashrc and ~/.zshrc, so in style1, you should manually comment the proxy settings.
-```shell
-export http_proxy=http://127.0.0.1:7890
-export https_proxy=http://127.0.0.1:7890
-```
+
 - style2(only supported in Linux): set --net host
 ```shell
 sudo docker run -d --name aigo --gpus all \
@@ -54,6 +50,11 @@ sudo docker run -d --name aigo --gpus all \
   aigallery
 ```
 > this way container and host share the same port.
+> note: the following contents can been written to ~/.bashrc and ~/.zshrc if you want to go through the system proxy.
+```shell
+export http_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7890
+```
 
 ## enter the container
 
