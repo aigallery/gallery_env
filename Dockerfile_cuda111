@@ -30,7 +30,7 @@ RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple &&
 # pip3 install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
 RUN pip3 install --no-cache-dir torch==1.10+cu111 torchvision==0.11.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 RUN pip3 install --no-cache-dir mmcv-full==1.4.0 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.10/index.html
-RUN pip3 install --no-cache-dir mmdet==2.24.1
+RUN pip3 install --no-cache-dir mmdet==2.24.1 jupyterlab numpy pandas
 
 # COPY torch-1.12.1+cu113-cp38-cp38-linux_x86_64.whl .
 # COPY torchvision-0.13.1+cu113-cp38-cp38-linux_x86_64.whl .
