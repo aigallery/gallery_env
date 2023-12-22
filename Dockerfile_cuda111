@@ -1,0 +1,62 @@
+# FROM nvidia/cuda:11.3.1-cudnn8-devel-ubuntu20.04
+FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
+#RUN apt-key del 7fa2af80 && \
+#    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub && \
+#    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64/7fa2af80.pub
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Update package sources and install required packages
+RUN sed -i 's@/archive.ubuntu.com/@/mirrors.aliyun.com/@g' /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        locales git vim nano python3-pip python3-dev zsh curl openssh-server && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set locale to UTF-8
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf && \
+    locale-gen en_US.UTF-8
+
+# Upgrade pip and install Python packages
+RUN python3 -m pip install --no-cache-dir --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Set pip source
+RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip3 config set install.trusted-host https://pypi.tuna.tsinghua.edu.cn
+
+# Install Torch and related packages
+# pip3 install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
+RUN pip3 install --no-cache-dir torch==1.10+cu111 torchvision==0.11.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip3 install --no-cache-dir mmcv-full==1.4.0 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.10/index.html
+RUN pip3 install --no-cache-dir mmdet==2.24.1
+
+# COPY torch-1.12.1+cu113-cp38-cp38-linux_x86_64.whl .
+# COPY torchvision-0.13.1+cu113-cp38-cp38-linux_x86_64.whl .
+# RUN pip3 install --no-cache-dir torch-1.11.1+cu113-cp38-cp38-linux_x86_64.whl \
+#     torchvision-0.13.1+cu113-cp38-cp38-linux_x86_64.whl
+
+
+# Configure zsh and aliases
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
+    echo 'alias python="python3"' >> ~/.bashrc && \
+    echo 'alias python="python3"' >> ~/.zshrc && \
+    echo 'alias pip="pip3"' >> ~/.bashrc && \
+    echo 'alias pip="pip3"' >> ~/.zshrc && \
+    echo 'PROMPT_DIRTRIM=3' >> ~/.bashrc && \
+    echo 'PROMPT_DIRTRIM=3' >> ~/.zshrc
+
+# Configure SSH
+RUN mkdir /var/run/sshd && \
+    echo 'root:99521' | chpasswd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
+    echo "export VISIBLE=now" >> /etc/profile
+EXPOSE 22
+
+# Set working directory
+WORKDIR /workspace
+
+# Start Jupyter Lab
+CMD /bin/bash -c 'jupyter lab --no-browser --allow-root --ip=0.0.0.0 --NotebookApp.token="" --NotebookApp.password=""'
