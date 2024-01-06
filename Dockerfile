@@ -72,3 +72,5 @@ WORKDIR /workspace
 
 # Start Jupyter Lab
 CMD /bin/bash -c 'jupyter lab --no-browser --allow-root --ip=0.0.0.0 --NotebookApp.token="" --NotebookApp.password=""'
+
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]
