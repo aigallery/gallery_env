@@ -89,7 +89,7 @@ python3 -c "import torch; print(torch.cuda.is_available())"
 ## use SSH to access the container (only for style1)
 
 ```shell
-# First run the ssh server in the container first
+# First run the ssh server in the container first. if there are no ENTRYPOINT ["/usr/sbin/sshd", "-D"] in the Dockerfile
 sudo docker exec -d aigo /usr/sbin/sshd
 
 # Access it via
